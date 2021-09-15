@@ -18,7 +18,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	redirect := router.Group("/")
 	{
-		redirect.GET("/:guid", h.getLink)
+		redirect.GET("/:hash", h.getLink)
 	}
 
 	links := router.Group("/links")

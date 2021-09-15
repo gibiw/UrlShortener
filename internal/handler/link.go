@@ -26,9 +26,9 @@ func (h *Handler) createLink(c *gin.Context) {
 }
 
 func (h *Handler) getLink(c *gin.Context) {
-	guid := c.Param("guid")
+	guid := c.Param("hash")
 
-	link, err := h.services.GetByUrl(guid)
+	link, err := h.services.GetByHash(guid)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

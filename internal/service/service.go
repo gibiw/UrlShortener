@@ -1,13 +1,12 @@
 package service
 
 import (
-	link "github.com/gibiw/UrlShortener"
 	"github.com/gibiw/UrlShortener/internal/repository"
 )
 
 type LinkItem interface {
 	Create(o string) (string, error)
-	GetByUrl(guid string) (link.LinkItem, error)
+	GetByHash(guid string) (string, error)
 }
 
 type Service struct {

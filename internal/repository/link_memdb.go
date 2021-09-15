@@ -64,7 +64,7 @@ func (r *LinkItemRepository) GetByUrl(url string) (link.LinkItem, error) {
 	defer txn.Abort()
 
 	var l link.LinkItem
-	raw, err := txn.First(linkitemTable, "modification", url)
+	raw, err := txn.First(linkitemTable, "original", url)
 	if err != nil {
 		return l, err
 	}
@@ -72,4 +72,18 @@ func (r *LinkItemRepository) GetByUrl(url string) (link.LinkItem, error) {
 	l = *raw.(*link.LinkItem)
 
 	return l, nil
+}
+
+func (r *LinkItemRepository) GetByHash(hash string) (string, error) {
+	txn := r.db.Txn(false)
+	defer txn.Abort()
+
+	raw, err := txn.First(linkitemTable, "modification", hash)
+	if err != nil {
+		return "", err
+	}
+
+	l := *raw.(*link.LinkItem)
+
+	return l.Original, nil
 }

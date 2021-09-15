@@ -1,7 +1,6 @@
 package service
 
 import (
-	link "github.com/gibiw/UrlShortener"
 	"github.com/gibiw/UrlShortener/internal/repository"
 	util "github.com/gibiw/UrlShortener/pkg"
 )
@@ -27,6 +26,6 @@ func (s *LinkItemService) Create(o string) (string, error) {
 	return res, nil
 }
 
-func (s *LinkItemService) GetByUrl(guid string) (link.LinkItem, error) {
-	return s.repo.GetByUrl(guid)
+func (s *LinkItemService) GetByHash(hash string) (string, error) {
+	return s.repo.GetByHash(hash)
 }
