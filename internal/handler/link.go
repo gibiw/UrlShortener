@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	link "github.com/gibiw/UrlShortener"
+	util "github.com/gibiw/UrlShortener/pkg"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,11 +28,20 @@ func (h *Handler) createLink(c *gin.Context) {
 }
 
 func (h *Handler) getLink(c *gin.Context) {
-	guid := c.Param("hash")
+	hash := c.Param("hash")
 
-	link, err := h.services.GetByHash(guid)
+	link, err := h.services.GetByHash(hash)
 	if err != nil {
-		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		var status int
+
+		switch err.(type) {
+		case *util.NotFoundError:
+			status = http.StatusNotFound
+		default:
+			status = http.StatusInternalServerError
+		}
+
+		newErrorResponse(c, status, err.Error())
 		return
 	}
 

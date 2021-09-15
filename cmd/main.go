@@ -24,7 +24,7 @@ func main() {
 	srv := new(server.Server)
 
 	if err := srv.Run(port, handlers.InitRoutes()); err != nil {
-		log.Fatal(err.Error())
+		log.Fatalf("error starting server: %s", err.Error())
 	}
 }
 
