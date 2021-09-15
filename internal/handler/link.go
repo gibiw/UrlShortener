@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	link "github.com/gibiw/UrlShortener"
@@ -21,7 +22,7 @@ func (h *Handler) createLink(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"url": mod,
+		"url": fmt.Sprintf("http://%s:%s/%s", h.host, h.port, mod),
 	})
 }
 

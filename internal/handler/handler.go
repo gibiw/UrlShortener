@@ -7,10 +7,12 @@ import (
 
 type Handler struct {
 	services *service.Service
+	host     string
+	port     string
 }
 
-func NewHandler(services *service.Service) *Handler {
-	return &Handler{services: services}
+func NewHandler(services *service.Service, host, port string) *Handler {
+	return &Handler{services: services, host: host, port: port}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
