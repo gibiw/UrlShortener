@@ -16,9 +16,13 @@ func NewHandler(services *service.Service) *Handler {
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
+	redirect := router.Group("/")
+	{
+		redirect.GET("/:guid", h.getLink)
+	}
+
 	links := router.Group("/links")
 	{
-		links.GET("/:guid", h.getLink)
 		links.POST("/", h.createLink)
 	}
 
