@@ -34,7 +34,5 @@ func (h *Handler) getLink(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"url": link,
-	})
+	c.Redirect(http.StatusFound, link)
 }
