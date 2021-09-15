@@ -4,6 +4,7 @@ import (
 	"log"
 
 	link "github.com/gibiw/UrlShortener"
+	util "github.com/gibiw/UrlShortener/pkg"
 	"github.com/hashicorp/go-memdb"
 )
 
@@ -64,9 +65,13 @@ func (r *LinkItemRepository) GetByUrl(url string) (link.LinkItem, error) {
 	defer txn.Abort()
 
 	var l link.LinkItem
-	raw, err := txn.First(linkitemTable, "original", url)
+	raw, err := txn.First(linkitemTable, "id", url)
 	if err != nil {
 		return l, err
+	}
+
+	if raw == nil {
+		return l, util.NewNotFoundError("link not found")
 	}
 
 	l = *raw.(*link.LinkItem)
@@ -81,6 +86,10 @@ func (r *LinkItemRepository) GetByHash(hash string) (string, error) {
 	raw, err := txn.First(linkitemTable, "modification", hash)
 	if err != nil {
 		return "", err
+	}
+
+	if raw == nil {
+		return "", util.NewNotFoundError("hash not found")
 	}
 
 	l := *raw.(*link.LinkItem)
