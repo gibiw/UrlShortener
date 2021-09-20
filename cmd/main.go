@@ -19,7 +19,7 @@ func main() {
 	port := viper.GetString("port")
 
 	repos := repository.NewRepository()
-	services := service.NewService(repos)
+	services := service.NewService(repos, viper.GetInt("lenghOfString"))
 	handlers := handler.NewHandler(services, viper.GetString("host"), port)
 	srv := new(server.Server)
 

@@ -5,14 +5,13 @@ import (
 	util "github.com/gibiw/UrlShortener/pkg"
 )
 
-const lenghOfString int = 6
-
 type LinkItemService struct {
-	repo repository.LinkItem
+	repo          repository.LinkItem
+	lenghOfString int
 }
 
-func NewLinkItemService(repo repository.LinkItem) *LinkItemService {
-	return &LinkItemService{repo: repo}
+func NewLinkItemService(repo repository.LinkItem, lenghOfString int) *LinkItemService {
+	return &LinkItemService{repo: repo, lenghOfString: lenghOfString}
 }
 
 func (s *LinkItemService) Create(o string) (string, error) {
@@ -27,7 +26,7 @@ func (s *LinkItemService) Create(o string) (string, error) {
 		return "", err
 	}
 
-	mod := util.RandString(lenghOfString)
+	mod := util.RandString(s.lenghOfString)
 
 	var exitFor = true
 	for exitFor {
@@ -36,7 +35,7 @@ func (s *LinkItemService) Create(o string) (string, error) {
 		} else if err != nil && !ok {
 			return "", err
 		} else {
-			mod = util.RandString(lenghOfString)
+			mod = util.RandString(s.lenghOfString)
 		}
 	}
 
